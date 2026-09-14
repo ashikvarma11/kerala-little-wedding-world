@@ -6,3 +6,5 @@
 @media(min-width:701px){.intro{display:none}}
 #canvas canvas{touch-action:none;cursor:grab}#canvas canvas:active{cursor:grabbing}
 .detail-row a{text-decoration-color:#b8843f;text-underline-offset:3px}.detail-row a:hover{text-decoration-thickness:2px}
+.bottom{justify-content:flex-end}dialog[open]{animation:panelReveal .55s cubic-bezier(.2,.8,.2,1)}@keyframes panelReveal{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.arrival #canvas canvas{filter:saturate(1.28) brightness(1.15);transition:filter .5s ease}.arrival #thumb{animation:arrivalPulse .55s ease-in-out alternate 2}@keyframes arrivalPulse{from{transform:scale(1)}to{transform:scale(1.22)}}
