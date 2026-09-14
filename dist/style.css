@@ -5,3 +5,4 @@
 @media(max-width:360px){header{left:18px;right:18px;gap:8px}.brand .eyebrow{font-size:8px;letter-spacing:.7px;white-space:nowrap}h1{font-size:19px;white-space:nowrap}.pill{max-width:96px;padding:10px;font-size:11px}.intro{top:108px}.journey{padding:10px}.bottom{gap:8px}.journey .eyebrow{font-size:9px}#progress span{font-size:11px;margin-left:5px}#interact{font-size:12px;padding:14px 12px}.controls{gap:10px}.icon-button{flex-shrink:0}}
 @media(min-width:701px){.intro{display:none}}
 #canvas canvas{touch-action:none;cursor:grab}#canvas canvas:active{cursor:grabbing}
+.detail-row a{text-decoration-color:#b8843f;text-underline-offset:3px}.detail-row a:hover{text-decoration-thickness:2px}
