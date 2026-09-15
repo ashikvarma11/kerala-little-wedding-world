@@ -196,12 +196,12 @@ for f in range(1,34,2):
             p=rig.pose.bones[name+side];p.rotation_euler.x=angle;p.keyframe_insert('rotation_euler',frame=f,group=p.name)
     p=rig.pose.bones['Spine'];p.rotation_euler.y=.018*sin(a);p.keyframe_insert('rotation_euler',frame=f,group=p.name)
     p=rig.pose.bones['Pelvis'];p.location.y=.008*(1-cos(2*a));p.keyframe_insert('location',frame=f,group=p.name)
-walk=rig.animation_data.action;walk.name='Walk'
+walk=rig.animation_data.action;walk.name='Walk';walk.use_fake_user=True
 rig.animation_data.action=None
 for p in rig.pose.bones:p.rotation_euler=(0,0,0);p.location=(0,0,0)
 for f in [1,31,61]:
     p=rig.pose.bones['Spine'];p.rotation_euler.x=.006 if f==31 else 0;p.keyframe_insert('rotation_euler',frame=f,group=p.name)
-idle=rig.animation_data.action;idle.name='Idle'
+idle=rig.animation_data.action;idle.name='Idle';idle.use_fake_user=True
 rig.animation_data.action=None
 for p in rig.pose.bones:p.rotation_euler=(0,0,0);p.location=(0,0,0)
 scene=bpy.context.scene;scene.frame_start=1;scene.frame_end=33;scene.frame_set(1)
