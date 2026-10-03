@@ -10,9 +10,11 @@ Validation: browser-rendered front/three-quarter idle and walking previews; move
 
 ## Opening boat arrival
 
-`dist/boat-arrival.js` uses the existing Kenney canoe as a vallam. On each page load it carries the character to a timber jetty, plays the model's authored Wave clip during the approach, then uses its Walk clip to cross a boarding plank and reach the bank. A brief camera transition hands control to the existing third-person movement. The boat remains moored after arrival.
+`dist/boat-arrival.js` uses the existing Kenney canoe as a vallam. On each page load the character sits on a timber seat and rows a paddle, then rises before using its authored Walk clip to cross a boarding plank and reach the bank. `dist/rowing-pose.js` applies a seated pose and two-bone arm IK over Idle, keeping both wrists on the moving paddle shaft. It restores feet and finger transforms before the next mixer update so the temporary pose does not accumulate or alter walking. A brief camera transition hands control to the existing third-person movement. The boat remains moored after arrival.
 
-The introduction takes about 7.4 seconds of active animation time. Skip arrival and Directions both end it immediately. Guests requesting reduced motion start on the bank. Movement and location markers are hidden during the sequence; essential Directions remain available. The arrival has no additional network asset requests.
+The introduction takes about 8 seconds of active animation time, including a 0.7-second transition from sitting to standing. Skip arrival and Directions both end it immediately. Guests requesting reduced motion start on the bank. Movement and location markers are hidden during the sequence; essential Directions remain available. The arrival has no additional network asset requests.
+
+As rowing ends, the playable character smoothly scales to 80% (about 1.32 world units tall) for better proportions against the pavilion and palms. Skip and reduced-motion arrivals apply the same final scale.
 
 Browser checks cover mobile approach/disembark/handoff, marker taps and automatic wedding details after landing, Skip, Directions during arrival, reduced motion, and 320px layout. Review captures are under `outputs/boat-arrival/`.
 

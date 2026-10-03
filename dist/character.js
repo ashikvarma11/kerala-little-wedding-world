@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {createRowingPose} from './rowing-pose.js?v=1';
 
 export async function createGroom(loader) {
   const gltf = await loader.loadAsync('assets/quaternius-modern-man.glb?v=1');
@@ -29,6 +30,7 @@ export async function createGroom(loader) {
     }
   });
   root.add(model);
+  const rowing=createRowingPose(root,model,gltf.animations);
   let motion = 0;
   return {
     root,
@@ -42,7 +44,9 @@ export async function createGroom(loader) {
       wave.setEffectiveWeight(waving ? 1 : 0);
       // The authored clip stays in place; world.js owns position and heading.
       if (moving) walk.setEffectiveTimeScale(T.MathUtils.clamp(distance / Math.max(dt, .001) / 2.7, .35, 1.3));
+      rowing.reset();
       mixer.update(dt);
+      rowing.update(gesture?.rowing || 0,gesture?.time || 0);
     }
   };
 }
