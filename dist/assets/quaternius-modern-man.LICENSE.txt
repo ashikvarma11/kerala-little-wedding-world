@@ -1,0 +1,8 @@
+Suit character — Ultimate Modular Men Pack, by Quaternius.
+CC0 1.0 Universal (Public Domain Dedication).
+https://creativecommons.org/publicdomain/zero/1.0/
+Original creator: https://quaternius.com/packs/ultimatemodularcharacters.html
+Downloaded from CC0 redistribution:
+https://github.com/agentkaerf/FreeModels/tree/main/Ultimate%20Modular%20Men-%20Feb%202022
+Modification: removed the pistol mesh; packaged glTF as GLB.
+All 24 original skeletal animation clips are retained.
