@@ -23,6 +23,8 @@ export function createBoatArrival({scene, boat, player, groom, camera, reduced, 
     scene.add(ripple);ripples.push(ripple);
   }
   boat.name = 'ArrivalVallam';
+  const seat=new T.Mesh(new T.BoxGeometry(.74,.07,.23),timber);
+  seat.name='VallamSeat';seat.scale.setScalar(1/boat.scale.x);seat.position.set(0,.65/boat.scale.y,0);seat.castShadow=true;boat.add(seat);
   const start = new T.Vector3(12.8,-.56,6.8), berth = new T.Vector3(9.15,-.56,3);
   const boatFloor = -.27, shore = new T.Vector3(5.8,.58,3);
   let time=0, active=true;
@@ -33,6 +35,8 @@ export function createBoatArrival({scene, boat, player, groom, camera, reduced, 
     if(!active)return;
     active=false;boat.position.copy(berth);boat.rotation.set(0,Math.PI,0);
     player.position.copy(shore);player.rotation.y=-Math.PI/2;
+    player.scale.setScalar(.8);
+    groom.update(0,0,true);
     gangplank.visible=false;ripples.forEach(r=>r.visible=false);
     world.classList.remove('arriving');overlay.hidden=true;
     document.querySelector('#skip-arrival').blur();
@@ -47,20 +51,22 @@ export function createBoatArrival({scene, boat, player, groom, camera, reduced, 
     }
     time+=dt;
     const before=player.position.clone();
-    if(time<3.8) {
+    if(time<4.5) {
       const t=smooth(time/3.8);
       boat.position.lerpVectors(start,berth,t);boat.position.y+=Math.sin(time*2)*.025;
       boat.rotation.set(0,T.MathUtils.lerp(-2.38,-Math.PI,t),Math.sin(time*1.6)*.02);
       player.position.set(boat.position.x,boatFloor+(boat.position.y-berth.y),boat.position.z);
       player.rotation.y=boat.rotation.y;
-      groom.update(dt,0,false,'wave');
+      const seated=1-smooth((time-3.8)/.7);
+      player.scale.setScalar(.8+.2*seated);
+      groom.update(dt,0,false,{rowing:seated,time:Math.min(time,3.8)});
     } else {
       boat.position.copy(berth);boat.rotation.set(0,Math.PI,0);
-      const boarding=T.MathUtils.clamp((time-3.8)/1.15,0,1);
+      const boarding=T.MathUtils.clamp((time-4.5)/1.15,0,1);
       if(boarding<1) {
         player.position.set(T.MathUtils.lerp(9.15,8.05,boarding),T.MathUtils.lerp(boatFloor,.58,smooth(boarding))+Math.sin(boarding*Math.PI)*.08,3);
       } else {
-        player.position.lerpVectors(new T.Vector3(8.05,.58,3),shore,T.MathUtils.clamp((time-4.95)/1.75,0,1));
+        player.position.lerpVectors(new T.Vector3(8.05,.58,3),shore,T.MathUtils.clamp((time-5.65)/1.75,0,1));
       }
       player.rotation.y=-Math.PI/2;
       groom.update(dt,Math.hypot(player.position.x-before.x,player.position.z-before.z),false);
@@ -71,11 +77,11 @@ export function createBoatArrival({scene, boat, player, groom, camera, reduced, 
       r.scale.setScalar(1+phase*2);r.material.opacity=(1-phase)*.2;
     });
     // Track the arrival closely enough to read on portrait screens.
-    const handoff=smooth((time-6.7)/.65);
+    const handoff=smooth((time-7.4)/.65);
     const goal=new T.Vector3(player.position.x+T.MathUtils.lerp(3.4,5.2,handoff),player.position.y+T.MathUtils.lerp(3.15,3.6,handoff),player.position.z+4.6*(1-handoff));
     camera.position.lerp(goal,time<=dt?1:1-Math.exp(-dt*5));
     camera.lookAt(player.position.x-T.MathUtils.lerp(.65,1.35,handoff),player.position.y+T.MathUtils.lerp(.7,1.15,handoff),player.position.z);
-    if(time>=7.35)finish();
+    if(time>=8.05)finish();
     return active;
   }
   if(reduced)finish();
