@@ -11,9 +11,10 @@ export async function createGroom(loader) {
     if (!animation) throw new Error(`Character animation missing: ${name}`);
     return mixer.clipAction(animation);
   };
-  const idle = clip('Idle'), walk = clip('Walk');
+  const idle = clip('Idle'), walk = clip('Walk'), wave = clip('Wave');
   idle.play();
   walk.play().setEffectiveWeight(0);
+  wave.play().setEffectiveWeight(0);
   mixer.update(0);
   model.updateMatrixWorld(true);
   const bounds = new T.Box3().setFromObject(model);
@@ -31,12 +32,14 @@ export async function createGroom(loader) {
   let motion = 0;
   return {
     root,
-    update(dt, distance, paused = false) {
+    update(dt, distance, paused = false, gesture = null) {
       const moving = !paused && distance > .0001;
       motion = T.MathUtils.damp(motion, moving ? 1 : 0, 14, dt);
       if (motion < .001) motion = 0;
-      idle.setEffectiveWeight(1 - motion);
+      const waving = !paused && gesture === 'wave';
+      idle.setEffectiveWeight(waving ? 0 : 1 - motion);
       walk.setEffectiveWeight(motion);
+      wave.setEffectiveWeight(waving ? 1 : 0);
       // The authored clip stays in place; world.js owns position and heading.
       if (moving) walk.setEffectiveTimeScale(T.MathUtils.clamp(distance / Math.max(dt, .001) / 2.7, .35, 1.3));
       mixer.update(dt);
