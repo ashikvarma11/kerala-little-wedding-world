@@ -8,6 +8,14 @@ Run `python scripts/prepare_modern_character.py work/quaternius-suit.gltf` to pa
 
 Validation: browser-rendered front/three-quarter idle and walking previews; movement of both upper arms and upper legs across a walking cycle; no visible pistol; mobile layouts at 390×844 and 320×740; automatic wedding arrival details, close behavior and Directions. Review screenshots and results are under `outputs/modern-character/` (ignored by Git).
 
+## Opening boat arrival
+
+`dist/boat-arrival.js` uses the existing Kenney canoe as a vallam. On each page load it carries the character to a timber jetty, plays the model's authored Wave clip during the approach, then uses its Walk clip to cross a boarding plank and reach the bank. A brief camera transition hands control to the existing third-person movement. The boat remains moored after arrival.
+
+The introduction takes about 7.4 seconds of active animation time. Skip arrival and Directions both end it immediately. Guests requesting reduced motion start on the bank. Movement and location markers are hidden during the sequence; essential Directions remain available. The arrival has no additional network asset requests.
+
+Browser checks cover mobile approach/disembark/handoff, marker taps and automatic wedding details after landing, Skip, Directions during arrival, reduced motion, and 320px layout. Review captures are under `outputs/boat-arrival/`.
+
 ## Earlier character experiments
 
 The character is an original stylized Blender model based on the user-supplied portrait. The warm medium skin, pale ivory band-collar kurta, rolled sleeves, gold kasavu mundu, dark swept hair, beard and black bracelet follow that reference. The unseen back and feet are interpreted; simple brown sandals complete the model. The likeness is approximate, not a photogrammetry scan.
